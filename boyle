@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İTÜ Moleküler Biyoloji ve Genetik Seçmeli Ön Şartları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0074d9;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .button-group button {
+            background-color: #dc3545; /* Kırmızı renk */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .button-group button:hover {
+            background-color: #c82333; /* Koyu kırmızı */
+        }
+
+        #hakKazanilanDiv {
+            display: none;
+            margin-top: 30px;
+        }
+
+        #hakKazanilanDiv ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #hakKazanilanDiv li {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .header-text {
+            font-size: 20px;
+            color: #555;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .note {
+            font-style: italic;
+            color: #ff6347; /* Kırmızı renk */
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        İTÜ MOLEKÜLER BİYOLOJİ VE GENETİK SEÇMELİ ÖN ŞARTLARI
+    </header>
+
+    <h2>Verdiğiniz Dersleri Seçiniz</h2>
+
+    <div class="section">
+        <div class="button-group">
+            <button id="microbiologyButton">Microbiology</button>
+            <button id="physicalChemistryButton">Physical Chemistry</button>
+            <button id="molecularGeneticsButton">Molecular Genetics</button>
+            <button id="ecologyButton">Ecology</button>
+            <button id="cellBiologyButton">Cell Biology</button>
+            <button id="biochemistry1Button">Biochemistry 1</button>
+            <button id="mathematicsForBiologistsButton">Mathematics for Biologists</button>
+            <button id="molecularBiologyButton">Molecular Biology</button>
+        </div>
+    </div>
+
+    <div class="section" id="hakKazanilanDiv">
+        <div class="header-text">Alabileceğiniz Dersler:</div>
+        <ul id="guzUl"></ul>
+        <ul id="baharUl"></ul>
+        <ul id="acilmayanUl"></ul>
+    </div>
+
+    <script>
+        const dersler = {
+            'Microbiology': [
+                { ders: "Virology", donem: "Güz" },
+                { ders: "Microbial Physiology", donem: "Güz" },
+                { ders: "Industrial Microbiology", donem: "Bahar" }
+            ],
+            'Physical Chemistry': [
+                { ders: "Modelling in Biological System", donem: "Güz" }
+            ],
+            'Molecular Genetics': [
+                { ders: "Recombinant DNA Technology", donem: "Güz" },
+                { ders: "Developmental Biology", donem: "Bahar" },
+                { ders: "Transgenic Plant Technology", donem: "Açılmıyor" },
+		{ ders: "Molecular Biotechnology", donem: "Güz" },
+                { ders: "Microbial Genetics", donem: "Açılmıyor" }
+            ],
+            'Ecology': [
+                { ders: "Current Topics in Ecology", donem: "Güz" }
+            ],
+            'Cell Biology': [
+                { ders: "Molecular Immunology", donem: "Bahar" },
+                { ders: "Cancer Biology", donem: "Bahar" }
+            ],
+            'Biochemistry 1': [
+                { ders: "Prot. Struct.-Function Relat.", donem: "Bahar" },
+                { ders: "Modern Techniques in Biology", donem: "Bahar" },
+                { ders: "Enzymology", donem: "Bahar" },
+                { ders: "Protein Biotechnology", donem: "Açılmıyor" }
+            ],
+            'Mathematics for Biologists': [
+                { ders: "Mathematical Biology", donem: "Açılmıyor" }
+            ],
+            'Molecular Biology': [
+                { ders: "Molecular Neurobiology", donem: "Bahar" }
+            ]
+        };
+
+        const selectedDersler = [];
+
+        const dersButtons = document.querySelectorAll('.button-group button');
+        dersButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const dersAdi = button.innerText;
+                if (selectedDersler.includes(dersAdi)) {
+                    selectedDersler.splice(selectedDersler.indexOf(dersAdi), 1);
+                    button.style.backgroundColor = '#dc3545'; // Kırmızı renk (seçilmemiş)
+                } else {
+                    selectedDersler.push(dersAdi);
+                    button.style.backgroundColor = '#28a745'; // Yeşil renk (seçilmiş)
+                }
+                updateAlinabilecekDersler();
+            });
+        });
+
+        function updateAlinabilecekDersler() {
+            const guzUl = document.getElementById('guzUl');
+            const baharUl = document.getElementById('baharUl');
+            const acilmayanUl = document.getElementById('acilmayanUl');
+            guzUl.innerHTML = '';
+            baharUl.innerHTML = '';
+            acilmayanUl.innerHTML = '';
+
+            const hakKazanilanDiv = document.getElementById('hakKazanilanDiv');
+            guzUl.style.display = 'none';
+            baharUl.style.display = 'none';
+            acilmayanUl.style.display = 'none';
+
+            // Derslerin kontrolü ve listeye eklenmesi
+            for (let dersAdi in dersler) {
+                if (selectedDersler.includes(dersAdi)) {
+                    dersler[dersAdi].forEach(ders => {
+                        const li = document.createElement('li');
+                        li.innerText = ders.ders + " (" + ders.donem + ")";
+                        
+                        // Molecular Genetics seçildiğinde Molecular Biotechnology'yi ekle
+                        if (ders.ders === "Molecular Biotechnology" && selectedDersler.includes("Molecular Genetics")) {
+                            const note = document.createElement('span');
+                            note.className = 'note';
+                            note.innerText = "Not: Ayrıca General Biotechnology'i vermiş olmalısınız.";
+                            li.appendChild(note);
+                        }
+
+                        // Matematiksel biyoloji için açıklama
+                        if (ders.ders === "Mathematical Biology") {
+                            const note = document.createElement('span');
+                            note.className = 'note';
+                            note.innerText = "Not: General Biology 2 dersini almış olmalısınız.";
+                            li.appendChild(note);
+                        }
+
+                        // Güz dönemi için kontrol et
+                        if (ders.donem === "Güz") {
+                            guzUl.appendChild(li);
+                        } else if (ders.donem === "Bahar") {
+                            baharUl.appendChild(li);
+                        } else {
+                            acilmayanUl.appendChild(li);
+                        }
+                    });
+                }
+            }
+
+            // Eğer alınabilecek ders varsa, göster
+            if (guzUl.children.length > 0 || baharUl.children.length > 0 || acilmayanUl.children.length > 0) {
+                hakKazanilanDiv.style.display = 'block';
+                guzUl.style.display = 'block';  // Güz derslerini göster
+                baharUl.style.display = 'block'; // Bahar derslerini göster
+                acilmayanUl.style.display = 'block';  // Açılmayan dersleri göster
+            } else {
+                hakKazanilanDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
